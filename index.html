@@ -36,7 +36,6 @@
             gap: 15px;
         }
 
-        /* Estilo dos Botões */
         .link-card {
             background: transparent;
             border: 2px solid #00ff88;
@@ -57,30 +56,49 @@
             transform: scale(1.05);
         }
 
-        /* Campo de Senha */
-        .senha-container {
-            display: none; /* Começa escondido */
+        /* Estilo para os campos que vão expandir */
+        .sessao-secreta {
+            display: none; /* Escondido por padrão */
             flex-direction: column;
             gap: 10px;
-            margin-top: -5px;
-            padding: 10px;
-            border: 1px solid #333;
+            margin-top: 10px;
+            padding: 15px;
+            border: 1px dashed #00ff88;
             border-radius: 8px;
+            background: #1a1a1a;
+        }
+
+        .link-secreto {
+            background: #00ff8822;
+            border: 1px solid #00ff88;
+            color: white;
+            padding: 10px;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .senha-container {
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 5px;
         }
 
         input {
-            padding: 10px;
+            padding: 12px;
             border-radius: 5px;
             border: none;
-            outline: none;
             text-align: center;
+            font-size: 16px;
         }
 
         button.btn-entrar {
             background: #00ff88;
             color: #121212;
             border: none;
-            padding: 8px;
+            padding: 10px;
             border-radius: 5px;
             font-weight: bold;
             cursor: pointer;
@@ -94,38 +112,54 @@
 
     <div class="links-container">
         
+        <a href="https://www.instagram.com/acarllos_/" class="link-card" target="_blank">Instagram Principal</a>
+        <a href="https://www.instagram.com/artheruth/" class="link-card" target="_blank">Instagram Secundário</a>
+        <a href="mailto:abitticarlos@gmail.com" class="link-card" target="_blank">E-mail</a>
+
         <div style="display: flex; flex-direction: column; gap: 10px;">
-            <div class="link-card" onclick="toggleSenha()">Aba Restrita 🔒</div>
+            <div class="link-card" onclick="toggleFormSenha()">Aba Restrita 🔒</div>
             
-            <div id="campo-senha" class="senha-container">
+            <div id="form-senha" class="senha-container">
                 <input type="password" id="input-senha" placeholder="Digite a senha">
-                <button class="btn-entrar" onclick="verificarSenha()">Entrar</button>
+                <button class="btn-entrar" onclick="validarAcesso()">Desbloquear Conteúdo</button>
+            </div>
+
+            <div id="conteudo-secreto" class="sessao-secreta">
+                <p style="text-align: center; font-size: 12px; color: #00ff88;">🔓 Acesso Liberado</p>
+                <a href="LINK_1" class="link-secreto">Campo Secreto 1</a>
+                <a href="LINK_2" class="link-secreto">Campo Secreto 2</a>
+                <a href="LINK_3" class="link-secreto">Campo Secreto 3</a>
+                <a href="LINK_4" class="link-secreto">Campo Secreto 4</a>
+                <a href="LINK_5" class="link-secreto">Campo Secreto 5</a>
             </div>
         </div>
 
-        <a href="https://www.instagram.com/acarllos_/" class="link-card" target="_blank">Instagram Principal</a>
-        <a href="https://www.instagram.com/artheruth/" class="link-card" target="_blank">Instagram Secundário</a>
-
-        <a href="mailto:abitticarlos@gmail.com" class="link-card" target="_blank">E-mail</a>
     </div>
 
     <script>
-        // Abre e fecha o campo de senha
-        function toggleSenha() {
-            const container = document.getElementById('campo-senha');
-            container.style.display = container.style.display === 'flex' ? 'none' : 'flex';
+        // Mostra/Esconde o input de senha
+        function toggleFormSenha() {
+            const form = document.getElementById('form-senha');
+            const conteudo = document.getElementById('conteudo-secreto');
+            
+            // Se o conteúdo já estiver aberto, ele fecha tudo
+            if (conteudo.style.display === 'flex') {
+                conteudo.style.display = 'none';
+            } else {
+                form.style.display = form.style.display === 'flex' ? 'none' : 'flex';
+            }
         }
 
-        // Verifica a senha
-        function verificarSenha() {
+        // Valida a senha e expande os 5 campos
+        function validarAcesso() {
             const senhaDigitada = document.getElementById('input-senha').value;
             const senhaCorreta = "07020401";
             
             if (senhaDigitada === senhaCorreta) {
-                // TROQUE O LINK ABAIXO PELO LINK DA SUA ABA RESTRITA
-                window.location.href = "https://1drv.ms/v/c/b7955fde53ea9d7d/IQAFRVFqObE8Qbq9HuiuFvvAAef_-IXJf_fXBI5z_JANiRg?e=2zyawN";
+                document.getElementById('form-senha').style.display = 'none'; // Esconde o input
+                document.getElementById('conteudo-secreto').style.display = 'flex'; // Abre os 5 campos
             } else {
-                alert("Senha incorreta! Tente novamente.");
+                alert("Senha incorreta!");
             }
         }
     </script>
