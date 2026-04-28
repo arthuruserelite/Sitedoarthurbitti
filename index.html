@@ -6,9 +6,9 @@
     <title>Meus Links</title>
     <style>
         body {
-            background-color: #121212; /* Fundo escuro */
+            background-color: #121212;
             color: white;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', sans-serif;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -26,17 +26,17 @@
             margin-bottom: 15px;
         }
 
-        h1 { font-size: 1.5rem; margin-bottom: 5px; }
-        p { color: #888; margin-bottom: 30px; }
+        h1 { font-size: 1.5rem; margin-bottom: 30px; }
 
         .links-container {
             width: 100%;
-            max-width: 400px;
+            max-width: 350px;
             display: flex;
             flex-direction: column;
             gap: 15px;
         }
 
+        /* Estilo dos Botões */
         .link-card {
             background: transparent;
             border: 2px solid #00ff88;
@@ -47,6 +47,8 @@
             border-radius: 8px;
             font-weight: bold;
             transition: all 0.3s ease;
+            cursor: pointer;
+            font-size: 16px;
         }
 
         .link-card:hover {
@@ -54,21 +56,79 @@
             color: #121212;
             transform: scale(1.05);
         }
+
+        /* Campo de Senha */
+        .senha-container {
+            display: none; /* Começa escondido */
+            flex-direction: column;
+            gap: 10px;
+            margin-top: -5px;
+            padding: 10px;
+            border: 1px solid #333;
+            border-radius: 8px;
+        }
+
+        input {
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            outline: none;
+            text-align: center;
+        }
+
+        button.btn-entrar {
+            background: #00ff88;
+            color: #121212;
+            border: none;
+            padding: 8px;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
 
-    <img src="https://github.com/identicons/user.png" alt="Foto de Perfil" class="profile-pic">
-
+    <img src="https://github.com/identicons/user.png" alt="Foto" class="profile-pic">
     <h1>Meus Links</h1>
-    <p>Confira meus conteúdos abaixo 👇</p>
 
     <div class="links-container">
-        <a href="COLOQUE_SEU_LINK_AQUI" class="link-card" target="_blank">Aba Restrita</a>
-        <a href="https://instagram.com/seuuser" class="link-card" target="_blank">Instagram</a>
-        <a href="https://github.com/seuuser" class="link-card" target="_blank">Meu Portfólio</a>
+        
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+            <div class="link-card" onclick="toggleSenha()">Aba Restrita 🔒</div>
+            
+            <div id="campo-senha" class="senha-container">
+                <input type="password" id="input-senha" placeholder="Digite a senha">
+                <button class="btn-entrar" onclick="verificarSenha()">Entrar</button>
+            </div>
+        </div>
+
+        <a href="URL_DO_INSTA_1" class="link-card" target="_blank">Instagram Principal</a>
+        <a href="URL_DO_INSTA_2" class="link-card" target="_blank">Instagram Secundário</a>
+
         <a href="mailto:seuemail@gmail.com" class="link-card" target="_blank">E-mail</a>
     </div>
+
+    <script>
+        // Abre e fecha o campo de senha
+        function toggleSenha() {
+            const container = document.getElementById('campo-senha');
+            container.style.display = container.style.display === 'flex' ? 'none' : 'flex';
+        }
+
+        // Verifica a senha
+        function verificarSenha() {
+            const senhaDigitada = document.getElementById('input-senha').value;
+            const senhaCorreta = "07020401";
+            
+            if (senhaDigitada === senhaCorreta) {
+                // TROQUE O LINK ABAIXO PELO LINK DA SUA ABA RESTRITA
+                window.location.href = "LINK_DA_SUA_PAGINA_RESTRITA_AQUI";
+            } else {
+                alert("Senha incorreta! Tente novamente.");
+            }
+        }
+    </script>
 
 </body>
 </html>
