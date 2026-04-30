@@ -13,5 +13,48 @@
   <li><a href="https://1drv.ms/f/c/b7955fde53ea9d7d/IgCls_cXebWVSLDpN2thj01RARlftsVRmdGnHE1qyyLS2aQ?e=p0VSzl">Arquivo 2</a></li>
 </ul>
 
-</body>
-</html>
+<div id="loading-screen">
+    <div class="loader"></div>
+    <p>function validarAcesso() {
+    const senha = document.getElementById('input-senha').value;
+    const prefixo = "a9f3k2x_";
+
+    const destino = prefixo + senha + ".html";
+
+    // mostra loading
+    const loading = document.getElementById('loading-screen');
+    loading.style.display = 'flex';
+
+    // espera 1 segundo e redireciona
+    setTimeout(() => {
+        window.location.href = destino;
+    }, 1000);
+}</p>
+</div></body>
+#loading-screen {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #121212;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 999;
+}
+
+.loader {
+    border: 4px solid #222;
+    border-top: 4px solid #00ff88;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin-bottom: 15px;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}</html>
