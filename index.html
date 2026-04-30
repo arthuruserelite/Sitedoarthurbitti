@@ -1,139 +1,121 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meus Links</title>
-    <style>
-        body {
-            background-color: #121212;
-            color: white;
-            font-family: 'Segoe UI', sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            margin: 0;
-            padding: 40px 20px;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meus Links</title>
 
-        .profile-pic {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            border: 3px solid #00ff88;
-            margin-bottom: 15px;
-            object-fit: cover;
-        }
+<style>
+body {
+    background-color: #121212;
+    color: white;
+    font-family: 'Segoe UI', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
 
-        h1 { font-size: 1.5rem; margin-bottom: 30px; }
+.links-container {
+    width: 100%;
+    max-width: 350px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
 
-        .links-container {
-            width: 100%;
-            max-width: 350px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
+.link-card {
+    border: 2px solid #00ff88;
+    color: #00ff88;
+    padding: 15px;
+    text-align: center;
+    border-radius: 8px;
+    cursor: pointer;
+}
 
-        .link-card {
-            background: transparent;
-            border: 2px solid #00ff88;
-            color: #00ff88;
-            text-decoration: none;
-            padding: 15px;
-            text-align: center;
-            border-radius: 8px;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            font-size: 16px;
-        }
+.link-card:hover {
+    background: #00ff88;
+    color: #121212;
+}
 
-        .link-card:hover {
-            background: #00ff88;
-            color: #121212;
-            transform: scale(1.05);
-            box-shadow: 0 0 15px rgba(0, 255, 136, 0.3);
-        }
+.senha-container, .conteudo-secreto {
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+}
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+#loading {
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: #121212;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
 
-        .senha-container {
-            display: none;
-            flex-direction: column;
-            gap: 10px;
-            margin-top: 5px;
-            animation: fadeIn 0.3s ease-out;
-        }
+.loader {
+    border: 4px solid #222;
+    border-top: 4px solid #00ff88;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
 
-        input {
-            padding: 12px;
-            border-radius: 5px;
-            border: 1px solid #333;
-            background: #222;
-            color: white;
-            text-align: center;
-            outline: none;
-        }
-
-        button.btn-entrar {
-            background: #00ff88;
-            color: #121212;
-            border: none;
-            padding: 12px;
-            border-radius: 5px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-    </style>
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+</style>
 </head>
+
 <body>
 
-    <img src="https://github.com/identicons/user.png" alt="Foto" class="profile-pic">
-    <h1>Meus Links</h1>
+<h2>Meus Links</h2>
 
-    <div class="links-container">
-        <a href="https://www.instagram.com/acarllos_/" class="link-card" target="_blank">Instagram Principal</a>
-        <a href="https://www.instagram.com/artheruth/" class="link-card" target="_blank">Instagram Secundário</a>
-        <a href="mailto:abitticarlos@gmail.com" class="link-card" target="_blank">E-mail</a>
+<div class="links-container">
+    <div class="link-card" onclick="mostrarSenha()">Área Restrita 🔒</div>
 
-        <div style="display: flex; flex-direction: column; gap: 10px;">
-            <div class="link-card" onclick="toggleFormSenha()">Aba Restrita 🔒</div>
-            
-            <div id="form-senha" class="senha-container">
-                <input type="password" id="input-senha" placeholder="Senha de acesso">
-                <button class="btn-entrar" onclick="validarAcesso()">Desbloquear</button>
-            </div>
-        </div>
+    <div id="senha" class="senha-container">
+        <input type="password" id="input">
+        <button onclick="entrar()">Entrar</button>
     </div>
 
-    <script>
-        function toggleFormSenha() {
-            const form = document.getElementById('form-senha');
-            form.style.display = form.style.display === 'flex' ? 'none' : 'flex';
-            if (form.style.display === 'flex') {
-                document.getElementById('input-senha').focus();
-            }
-        }
+    <div id="secreto" class="conteudo-secreto">
+        <a href="#">Link 1</a>
+        <a href="#">Link 2</a>
+    </div>
+</div>
 
-        function validarAcesso() {
-            const senha = document.getElementById('input-senha').value;
+<div id="loading">
+    <div class="loader"></div>
+    <p>Carregando...</p>
+</div>
 
-            const prefixo = "a9f3k2x_"; // você pode mudar isso
+<script>
+function mostrarSenha() {
+    document.getElementById('senha').style.display = 'flex';
+}
 
-            const destino = prefixo + senha + ".html";
+function entrar() {
+    const senha = document.getElementById('input').value;
 
-            window.location.href = destino;
-        }
+    if (senha === "07020401") {
 
-        document.getElementById('input-senha').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') validarAcesso();
-        });
-    </script>
+        document.getElementById('loading').style.display = 'flex';
+
+        setTimeout(() => {
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('secreto').style.display = 'flex';
+        }, 1000);
+
+    } else {
+        alert("Senha errada");
+    }
+}
+</script>
+
 </body>
 </html>
