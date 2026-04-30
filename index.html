@@ -58,33 +58,9 @@
             box-shadow: 0 0 15px rgba(0, 255, 136, 0.3);
         }
 
-        /* Animações e Sessão Secreta */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
-        }
-
-        .sessao-secreta {
-            display: none;
-            flex-direction: column;
-            gap: 10px;
-            margin-top: 10px;
-            padding: 15px;
-            border: 1px dashed #00ff88;
-            border-radius: 8px;
-            background: #1a1a1a;
-            animation: fadeIn 0.4s ease-out;
-        }
-
-        .link-secreto {
-            background: #00ff8822;
-            border: 1px solid #00ff88;
-            color: white;
-            padding: 12px;
-            text-decoration: none;
-            border-radius: 5px;
-            text-align: center;
-            font-size: 14px;
         }
 
         .senha-container {
@@ -133,57 +109,30 @@
                 <input type="password" id="input-senha" placeholder="Senha de acesso">
                 <button class="btn-entrar" onclick="validarAcesso()">Desbloquear</button>
             </div>
-
-            <div id="conteudo-secreto" class="sessao-secreta">
-                <p style="text-align: center; font-size: 12px; color: #00ff88;">🔓 Acesso Seguro Liberado</p>
-                <a href="https://1drv.ms/v/c/b7955fde53ea9d7d/IQAFRVFqObE8Qbq9HuiuFvvAAef_-IXJf_fXBI5z_JANiRg?e=kzTWqQ" target="_blank" class="link-secreto">Campo Pedro 1</a>
-                <a href="https://1drv.ms/f/c/b7955fde53ea9d7d/IgCls_cXebWVSLDpN2thj01RARlftsVRmdGnHE1qyyLS2aQ?e=p0VSzl" target="_blank" class="link-secreto">Casamento Sabrina</a>
-                <a href="#" class="link-secreto">EM BREVE</a>
-            </div>
         </div>
     </div>
 
     <script>
-        // Função para transformar a senha em Hash (SHA-256)
-        async function gerarHash(string) {
-            const msgUint8 = new TextEncoder().encode(string);
-            const hashBuffer = await crypto.subtle.digest('SHA-256', msgUint8);
-            const hashArray = Array.from(new Uint8Array(hashBuffer));
-            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-        }
-
         function toggleFormSenha() {
             const form = document.getElementById('form-senha');
-            const conteudo = document.getElementById('conteudo-secreto');
-            if (conteudo.style.display === 'flex') {
-                conteudo.style.display = 'none';
-            } else {
-                form.style.display = form.style.display === 'flex' ? 'none' : 'flex';
-                if (form.style.display === 'flex') document.getElementById('input-senha').focus();
+            form.style.display = form.style.display === 'flex' ? 'none' : 'flex';
+            if (form.style.display === 'flex') {
+                document.getElementById('input-senha').focus();
             }
         }
 
-        async function validarAcesso() {
-            const input = document.getElementById('input-senha');
-            const senhaDigitada = input.value;
-            
-            // Esse código longo abaixo é a sua senha "07020401" criptografada.
-            // Ninguém consegue saber qual é a senha original olhando isso aqui.
-            const hashCorreto = "3e03164993108603610991c01570776778f65492d5276e01a851897f51662973";
-            
-            const hashDigitado = await gerarHash(senhaDigitada);
+        function validarAcesso() {
+            const senha = document.getElementById('input-senha').value;
 
-            if (hashDigitado === hashCorreto) {
-                document.getElementById('form-senha').style.display = 'none';
-                document.getElementById('conteudo-secreto').style.display = 'flex';
-            } else {
-                alert("Acesso Negado!");
-                input.value = "";
-            }
+            const prefixo = "a9f3k2x_"; // você pode mudar isso
+
+            const destino = prefixo + senha + ".html";
+
+            window.location.href = destino;
         }
 
-        document.getElementById('input-senha').addEventListener('keypress', async (e) => {
-            if (e.key === 'Enter') await validarAcesso();
+        document.getElementById('input-senha').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') validarAcesso();
         });
     </script>
 </body>
